@@ -2735,6 +2735,36 @@ switch type_event
                 }
                 alarm[5] = 30
                 break
+            case 71:
+                sockets = ds_list_size(playerList)
+                global.anxvariable = safe_buffer_read(_buffer, buffer_u8)
+                if global.bufferOverflow
+                    exit
+                if (global.anxvariable == 1)
+                {
+                    if (ds_list_size(samusList) > 0 && ds_list_size(deadList) > 0)
+                    {
+                        if (ds_list_size(samusList) == ds_list_size(deadList) || ds_list_size(deadList) > ds_list_size(samusList))
+                        {
+                            evnt = global.event[308]
+                            evnt++
+                            if (global.event[308] < 4)
+                                global.event[308] = 4
+                            ds_list_clear(deadList)
+                        }
+                    }
+                    global.anxvariable = 2
+                    tstBfr = buffer_create(1024, buffer_grow, 1)
+                    buffer_seek(tstBfr, buffer_seek_start, 0)
+                    buffer_write(tstBfr, buffer_s32, 18)
+                    buffer_write(tstBfr, buffer_u8, 71)
+                    buffer_write(tstBfr, buffer_u8, global.anxvariable)
+                    buffer_poke(tstBfr, 0, buffer_s32, (buffer_tell(tstBfr) - 4))
+                    for (i = 0; i < sockets; i++)
+                        network_send_packet(ds_list_find_value(playerList, i), tstBfr, buffer_tell(tstBfr))
+                    buffer_delete(tstBfr)
+                }
+                break
         }
 
         break
