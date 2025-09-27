@@ -445,6 +445,7 @@ switch (type_event)
             case 110:
                 global.showHealthIndicatorsTimer = 900;
                 var checkBeam = buffer_read(_buffer, buffer_u8);
+                var checkCharge = buffer_read(_buffer, buffer_u8);
                 var checkMissile = buffer_read(_buffer, buffer_u8);
                 var checkDamage = buffer_read(_buffer, buffer_u8);
                 var checkFreeze = buffer_read(_buffer, buffer_u8);
@@ -491,7 +492,7 @@ switch (type_event)
                             
                             if (checkFreeze && global.playerFreeze == 0 && !global.frozenNormally)
                             {
-                                if (checkBeam && !global.freezeDisabled && global.playerFreeze == 0 && invincible == 0 && canbehit && state != IDLE && state != SAVING && state != SAVINGFX && state != SAVINGSHIPFX && state != SAVINGSHIP && state != ELEVATOR && state != GFELEVATOR)
+                                if (checkBeam && (!global.freezeDisabled || (global.exp_chargefreezesvaria && checkCharge)) && global.playerFreeze == 0 && invincible == 0 && canbehit && state != IDLE && state != SAVING && state != SAVINGFX && state != SAVINGSHIPFX && state != SAVINGSHIP && state != ELEVATOR && state != GFELEVATOR)
                                 {
                                     global.playerFreeze = 120;
                                     damageDir = 0;
@@ -514,9 +515,20 @@ switch (type_event)
                                     }
                                 }
                                 
-                                if (checkMissile && (checkDamage == 10 || checkDamage == 20) && !global.freezeDisabled && global.playerFreeze == 0 && invincible == 0 && canbehit && state != IDLE && state != SAVING && state != SAVINGFX && state != SAVINGSHIPFX && state != SAVINGSHIP && state != ELEVATOR && state != GFELEVATOR)
+                                if (checkMissile && (checkDamage == 10 || checkDamage == 20) && (!global.freezeDisabled || global.exp_chargefreezesvaria) && global.playerFreeze == 0 && invincible == 0 && canbehit && state != IDLE && state != SAVING && state != SAVINGFX && state != SAVINGSHIPFX && state != SAVINGSHIP && state != ELEVATOR && state != GFELEVATOR)
                                 {
-                                    global.playerFreeze = 120;
+                                    if (global.exp_chargefreezesvaria)
+                                    {
+                                        if (global.damageMult > 4)
+                                            global.playerFreeze = 0;
+                                        else
+                                            global.playerFreeze = 135 - floor((global.damageMult / 4) * 90);
+                                    }
+                                    else
+                                    {
+                                        global.playerFreeze = 120;
+                                    }
+                                    
                                     damageDir = 0;
                                     knockbackY = 0;
                                     global.frozenByRollback = 1;
@@ -593,6 +605,7 @@ switch (type_event)
                 global.juggActive = buffer_read(_buffer, buffer_u8);
                 global.MetCount = buffer_read(_buffer, buffer_u8);
                 global.exp_gradualetanks = buffer_read(_buffer, buffer_u8);
+                global.exp_chargefreezesvaria = buffer_read(_buffer, buffer_u8);
                 global.damageMult = damageMult;
                 global.saxmode = saxmode;
                 global.shortcuts = shortcuts;

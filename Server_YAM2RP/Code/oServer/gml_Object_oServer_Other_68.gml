@@ -960,6 +960,7 @@ switch (type_event)
                 var checkX = safe_buffer_read(_buffer, 4);
                 var checkY = safe_buffer_read(_buffer, 4);
                 var checkBeam = safe_buffer_read(_buffer, 1);
+                var checkCharge = safe_buffer_read(_buffer, 1);
                 var checkMissile = safe_buffer_read(_buffer, 1);
                 var checkDamage = safe_buffer_read(_buffer, 1);
                 var checkFreeze = safe_buffer_read(_buffer, 1);
@@ -992,6 +993,7 @@ switch (type_event)
                     buffer_seek(buffer, buffer_seek_start, 0);
                     buffer_write(buffer, buffer_u8, 110);
                     buffer_write(buffer, buffer_u8, checkBeam);
+                    buffer_write(buffer, buffer_u8, checkCharge);
                     buffer_write(buffer, buffer_u8, checkMissile);
                     buffer_write(buffer, buffer_u8, checkDamage);
                     buffer_write(buffer, buffer_u8, checkFreeze);
@@ -1001,6 +1003,7 @@ switch (type_event)
                     buffer_write(buffer, buffer_s32, bufferSize);
                     buffer_write(buffer, buffer_u8, 110);
                     buffer_write(buffer, buffer_u8, checkBeam);
+                    buffer_write(buffer, buffer_u8, checkCharge);
                     buffer_write(buffer, buffer_u8, checkMissile);
                     buffer_write(buffer, buffer_u8, checkDamage);
                     buffer_write(buffer, buffer_u8, checkFreeze);

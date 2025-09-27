@@ -19,4 +19,5 @@ oServer.syncedDifficulty = ini_read_real("Settings", "Difficulty", 1);
 oServer.syncedELM = ini_read_real("Settings", "ExtremeLabMetroids", 0);
 global.exp_rollbackhits = ini_read_real("ExperimentalSettings", "RollbackHits", 1);
 global.exp_gradualetanks = ini_read_real("ExperimentalSettings", "GradualETanks", global.saxmode);
+global.exp_chargefreezesvaria = ini_read_real("ExperimentalSettings", "ChargeFreezesVaria", global.saxmode);
 ini_close();

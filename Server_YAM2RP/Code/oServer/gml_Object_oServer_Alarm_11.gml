@@ -18,6 +18,7 @@ buffer_write(buffer, buffer_u8, global.shortcuts);
 buffer_write(buffer, buffer_u8, global.juggActive);
 buffer_write(buffer, buffer_u8, global.MetCount);
 buffer_write(buffer, buffer_u8, global.exp_gradualetanks);
+buffer_write(buffer, buffer_u8, global.exp_chargefreezesvaria);
 buffer_poke(buffer, 0, buffer_s32, buffer_tell(buffer) - 4);
 
 for (var i = 0; i < sockets; i++)

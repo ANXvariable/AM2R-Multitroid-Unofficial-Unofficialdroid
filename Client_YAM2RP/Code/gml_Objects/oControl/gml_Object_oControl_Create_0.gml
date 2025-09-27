@@ -558,3 +558,4 @@ global.revived = 0;
 file_delete("multitroid_log.txt");
 global.ssmode = 0;
 global.exp_gradualetanks = 1;
+global.exp_chargefreezesvaria = 1;
